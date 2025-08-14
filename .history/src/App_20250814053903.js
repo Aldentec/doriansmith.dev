@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Nav from './Components/Nav/Nav';
@@ -12,7 +12,7 @@ import Footer from './Components/Footer/Footer';
 import SEO from './Components/SEO/SEO';
 
 const App = () => {
-  const [currentSection] = useState('home');
+  const [currentSection, setCurrentSection] = useState('home');
 
   const getSEOData = () => {
     switch(currentSection) {

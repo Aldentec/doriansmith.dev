@@ -12,7 +12,7 @@ import Footer from './Components/Footer/Footer';
 import SEO from './Components/SEO/SEO';
 
 const App = () => {
-  const [currentSection] = useState('home');
+  const [currentSection, setCurrentSection] = useState('home');
 
   const getSEOData = () => {
     switch(currentSection) {

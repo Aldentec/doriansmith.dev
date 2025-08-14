@@ -41,23 +41,14 @@
     
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
-    <!-- Preconnect to external resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://s3.us-west-2.amazonaws.com">
-
-    <!-- DNS prefetch for social media -->
-    <link rel="dns-prefetch" href="https://github.com">
-    <link rel="dns-prefetch" href="https://linkedin.com">
     
     <!-- Google Analytics (replace GA_MEASUREMENT_ID with your actual ID) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Q301JK6PR"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-9Q301JK6PR');
+      gtag('config', 'GA_MEASUREMENT_ID');
     </script>
     
     <!-- Structured Data (JSON-LD) -->
@@ -71,8 +62,8 @@
       "url": "https://doriansmith.dev",
       "image": "https://s3.us-west-2.amazonaws.com/www.doriansmith.dev/dorian-about-me-section.JPG",
       "sameAs": [
-        "https://github.com/Aldentec",
-        "https://www.linkedin.com/in/aldentec"
+        "https://github.com/yourgithub",
+        "https://linkedin.com/in/yourlinkedin"
       ],
       "knowsAbout": [
         "JavaScript",
@@ -89,8 +80,6 @@
       }
     }
     </script>
-
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -39,20 +39,6 @@ const SEO = ({
           "name": "Dorian Smith",
           "jobTitle": "Full-Stack Developer",
           "description": description,
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Amazon",
-            "url": "https://amazon.com"
-          },
-          "alumniOf": {
-            "@type": "Organization",
-            "name": "Amazon"
-          },
-          "author": {
-            "@type": "Person",
-            "name": "Dorian Smith"
-          },
-          "inLanguage": "en-US",
           "url": url,
           "image": image,
           "sameAs": [
@@ -68,6 +54,10 @@ const SEO = ({
             "Web Development",
             "Music Production"
           ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Freelance"
+          }
         })}
       </script>
     </Helmet>

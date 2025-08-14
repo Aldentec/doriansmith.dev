@@ -68,6 +68,10 @@ const SEO = ({
             "Web Development",
             "Music Production"
           ],
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Freelance"
+          }
         })}
       </script>
     </Helmet>
