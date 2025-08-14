@@ -88,6 +88,29 @@ const Portfolio = () => {
             </div>
           ))}
         </div>
+        
+        {/* Additional project highlights */}
+        <div className="row mt-5">
+          <div className="col-12">
+            <div className="bg-primary text-white p-4 rounded">
+              <h3 className="h4 mb-3">Project Highlights</h3>
+              <div className="row">
+                <div className="col-md-4 mb-3">
+                  <h5 className="h6">Accessibility Focus</h5>
+                  <p className="mb-0 small">Building inclusive web applications that serve diverse user needs</p>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <h5 className="h6">Creative Technology</h5>
+                  <p className="mb-0 small">Merging music production expertise with modern web development</p>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <h5 className="h6">Cloud Architecture</h5>
+                  <p className="mb-0 small">Scalable AWS solutions for performance and reliability</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
