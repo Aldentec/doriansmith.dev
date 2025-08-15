@@ -1,0 +1,7 @@
+#skills {
+    color: #ffffff; 
+}
+
+#skills h1, #skills h3, #skills p, #skills li {
+    color: inherit;
+}

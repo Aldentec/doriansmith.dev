@@ -1,0 +1,247 @@
+/* Contact Section */
+.contact-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-description {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  margin-bottom: 50px;
+  line-height: 1.7;
+}
+
+.contact-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.contact-method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 30px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-secondary);
+}
+
+.contact-method:hover {
+  transform: translateY(-10px);
+  border-color: var(--text-accent);
+  color: var(--text-accent);
+  box-shadow: var(--shadow-glow);
+  text-decoration: none;
+}
+
+.contact-icon {
+  font-size: 3rem;
+  color: var(--text-accent);
+  transition: all 0.3s ease;
+}
+
+.contact-method:hover .contact-icon {
+  transform: scale(1.1);
+  color: var(--text-primary);
+}
+
+.contact-info {
+  text-align: center;
+}
+
+.contact-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.contact-subtitle {
+  font-size: 1rem;
+  color: var(--text-accent);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.contact-description-small {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.contact-method:hover .contact-title,
+.contact-method:hover .contact-subtitle,
+.contact-method:hover .contact-description-small {
+  color: var(--text-primary);
+}
+
+/* Additional Contact Information */
+.contact-additional {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+  text-align: left;
+}
+
+.contact-availability,
+.contact-location {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 30px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.contact-availability:hover,
+.contact-location:hover {
+  border-color: var(--text-accent);
+  transform: translateY(-5px);
+}
+
+.contact-availability h3,
+.contact-location h3 {
+  color: var(--text-accent);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-availability p,
+.contact-location p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Call to Action */
+.contact-cta {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.contact-cta:hover {
+  border-color: var(--text-accent);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.contact-cta h3 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.contact-cta p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.btn-large {
+  padding: 18px 35px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+}
+
+.btn-large i {
+  font-size: 1.2rem;
+}
+
+/* Animations */
+.contact-method {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.contact-method:nth-child(1) { animation-delay: 0.1s; }
+.contact-method:nth-child(2) { animation-delay: 0.2s; }
+.contact-method:nth-child(3) { animation-delay: 0.3s; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .contact-description {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+
+  .contact-methods {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-bottom: 50px;
+  }
+
+  .contact-method {
+    padding: 30px 25px;
+  }
+
+  .contact-icon {
+    font-size: 2.5rem;
+  }
+
+  .contact-additional {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  .contact-availability,
+  .contact-location {
+    padding: 25px;
+  }
+
+  .contact-cta {
+    padding: 30px;
+  }
+
+  .contact-cta h3 {
+    font-size: 1.3rem;
+  }
+
+  .contact-cta p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-method {
+    padding: 25px 20px;
+  }
+
+  .contact-icon {
+    font-size: 2rem;
+  }
+
+  .contact-title {
+    font-size: 1.2rem;
+  }
+
+  .contact-additional {
+    margin-bottom: 40px;
+  }
+
+  .contact-availability,
+  .contact-location {
+    padding: 20px;
+  }
+
+  .contact-cta {
+    padding: 25px;
+  }
+
+  .btn-large {
+    padding: 15px 30px;
+    font-size: 1rem;
+  }
+}
