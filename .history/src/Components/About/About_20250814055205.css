@@ -74,6 +74,28 @@
   transform: scale(1.02);
 }
 
+/* Click hint icon */
+.image-flip-container::after {
+  content: "🔄";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 123, 255, 0.9);
+  color: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  pointer-events: none;
+  transform: translateZ(1px);
+}
+
 .image-flip-container:hover::after {
   opacity: 1;
 }

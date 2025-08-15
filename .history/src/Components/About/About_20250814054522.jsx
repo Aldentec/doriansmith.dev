@@ -1,54 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import '../../App.css';
 import './About.css';
-import dorianSimpson from '../../Assets/dorian-simpson.jpg';
 
 const About = () => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [flipCount, setFlipCount] = useState(0);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  // Image URLs
-  const frontImage = "https://s3.us-west-2.amazonaws.com/www.doriansmith.dev/dorian-about-me-section.JPG";
-  const backImage = dorianSimpson;
-
-  const handleImageClick = useCallback(() => {
-    // Prevent rapid clicking during animation
-    if (isAnimating) return;
-    
-    setIsAnimating(true);
-    setIsFlipped(prev => !prev);
-    setFlipCount(prev => prev + 1);
-    
-    // Add success animation
-    setShowSuccess(true);
-    
-    // Reset animations after completion
-    setTimeout(() => {
-      setShowSuccess(false);
-      setIsAnimating(false);
-    }, 600); // Match the flip duration
-  }, [isAnimating]);
-
-  const handleKeyPress = useCallback((event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleImageClick();
-    }
-  }, [handleImageClick]);
-
-  // Easter egg: Special message after multiple flips
-  useEffect(() => {
-    if (flipCount === 5) {
-      console.log("🎉 You found the easter egg! You're persistent - I like that in a developer!");
-    } else if (flipCount === 10) {
-      console.log("🚀 Wow, you really like clicking! Want to collaborate on a project?");
-    } else if (flipCount === 15) {
-      console.log("🤖 Are you testing for bugs? I appreciate thorough QA!");
-    }
-  }, [flipCount]);
-
   return (
     <section id="about" className="py-5 bg-light" aria-labelledby="about-heading">
       <div className="container">
@@ -107,44 +61,17 @@ const About = () => {
           
           <div className="col-md-6">
             <figure>
-              <div 
-                className={`image-flip-container ${isFlipped ? 'flipped' : ''} ${showSuccess ? 'flip-success' : ''}`}
-                onClick={handleImageClick}
-                onKeyPress={handleKeyPress}
-                tabIndex="0"
-                role="button"
-                aria-label={`Profile image of Dorian Smith. Click to flip and see another image. Currently showing ${isFlipped ? 'Simpson character' : 'professional'} image.`}
-                aria-pressed={isFlipped}
-                style={{ cursor: isAnimating ? 'wait' : 'pointer' }}
-              >
-                <div className="image-flip-inner">
-                  {/* Front Image - Professional */}
-                  <div className="image-flip-front">
-                    <img
-                      src={frontImage}
-                      className="about-image"
-                      alt="Dorian Smith - Professional headshot showing full-stack developer and music producer"
-                      loading="lazy"
-                      width="400"
-                      height="400"
-                      draggable="false"
-                    />
-                  </div>
-                  
-                  {/* Back Image - Simpson Character */}
-                  <div className="image-flip-back">
-                    <img
-                      src={backImage}
-                      className="about-image"
-                      alt="Dorian Smith - Fun Simpson character illustration"
-                      loading="lazy"
-                      width="400"
-                      height="400"
-                      draggable="false"
-                    />
-                  </div>
-                </div>
-              </div>
+              <img
+                src="https://s3.us-west-2.amazonaws.com/www.doriansmith.dev/dorian-about-me-section.JPG"
+                className="img-fluid rounded-circle about-image"
+                alt="Dorian Smith - Full-Stack Developer and Music Producer, professional headshot"
+                loading="lazy"
+                width="600"
+                height="600"
+              />
+              <figcaption className="sr-only">
+                Professional photo of Dorian Smith, showcasing his approachable personality and professional demeanor as a full-stack developer.
+              </figcaption>
             </figure>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../App.css';
 import './About.css';
 import dorianSimpson from '../../Assets/dorian-simpson.jpg';
@@ -7,36 +7,26 @@ const About = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [flipCount, setFlipCount] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
 
-  // Image URLs
+  // Image URLs - replace the second one with your actual easter egg image
   const frontImage = "https://s3.us-west-2.amazonaws.com/www.doriansmith.dev/dorian-about-me-section.JPG";
-  const backImage = dorianSimpson;
+  const backImage = dorianSimpson
 
-  const handleImageClick = useCallback(() => {
-    // Prevent rapid clicking during animation
-    if (isAnimating) return;
-    
-    setIsAnimating(true);
-    setIsFlipped(prev => !prev);
+  const handleImageClick = () => {
+    setIsFlipped(!isFlipped);
     setFlipCount(prev => prev + 1);
     
     // Add success animation
     setShowSuccess(true);
-    
-    // Reset animations after completion
-    setTimeout(() => {
-      setShowSuccess(false);
-      setIsAnimating(false);
-    }, 600); // Match the flip duration
-  }, [isAnimating]);
+    setTimeout(() => setShowSuccess(false), 300);
+  };
 
-  const handleKeyPress = useCallback((event) => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       handleImageClick();
     }
-  }, [handleImageClick]);
+  };
 
   // Easter egg: Special message after multiple flips
   useEffect(() => {
@@ -44,8 +34,6 @@ const About = () => {
       console.log("🎉 You found the easter egg! You're persistent - I like that in a developer!");
     } else if (flipCount === 10) {
       console.log("🚀 Wow, you really like clicking! Want to collaborate on a project?");
-    } else if (flipCount === 15) {
-      console.log("🤖 Are you testing for bugs? I appreciate thorough QA!");
     }
   }, [flipCount]);
 
@@ -113,12 +101,11 @@ const About = () => {
                 onKeyPress={handleKeyPress}
                 tabIndex="0"
                 role="button"
-                aria-label={`Profile image of Dorian Smith. Click to flip and see another image. Currently showing ${isFlipped ? 'Simpson character' : 'professional'} image.`}
+                aria-label={`Profile image of Dorian Smith. Click to flip and see another image. Currently showing ${isFlipped ? 'back' : 'front'} image.`}
                 aria-pressed={isFlipped}
-                style={{ cursor: isAnimating ? 'wait' : 'pointer' }}
               >
                 <div className="image-flip-inner">
-                  {/* Front Image - Professional */}
+                  {/* Front Image */}
                   <div className="image-flip-front">
                     <img
                       src={frontImage}
@@ -127,24 +114,30 @@ const About = () => {
                       loading="lazy"
                       width="400"
                       height="400"
-                      draggable="false"
                     />
                   </div>
                   
-                  {/* Back Image - Simpson Character */}
+                  {/* Back Image */}
                   <div className="image-flip-back">
                     <img
                       src={backImage}
                       className="about-image"
-                      alt="Dorian Smith - Fun Simpson character illustration"
+                      alt="Dorian Smith - As a simpsons character"
                       loading="lazy"
                       width="400"
                       height="400"
-                      draggable="false"
                     />
                   </div>
                 </div>
               </div>
+              
+              <figcaption className="text-center mt-3 text-muted">
+                <small>
+                  {isFlipped ? "🎵 Creative side revealed!" : "💼 Professional mode"}
+                  <br />
+                  <em>Click the image for a surprise!</em>
+                </small>
+              </figcaption>
             </figure>
           </div>
         </div>
