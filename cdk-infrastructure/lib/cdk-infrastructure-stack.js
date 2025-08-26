@@ -1,0 +1,27 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CdkInfrastructureStack = void 0;
+const cdk = require("aws-cdk-lib");
+const iam = require("aws-cdk-lib/aws-iam");
+const lambda_1 = require("./lambda");
+const apigateway_1 = require("./apigateway");
+const permissions_1 = require("./permissions");
+class CdkInfrastructureStack extends cdk.Stack {
+    constructor(scope, id, props) {
+        super(scope, id, props);
+        // Set up Lambda
+        const sendEmailFunction = (0, lambda_1.setupLambda)(this);
+        // IAM role for APIG logging
+        const apiGatewayLoggingRole = new iam.Role(this, 'ApiGatewayLoggingRole', {
+            assumedBy: new iam.ServicePrincipal('apigateway.amazonaws.com'),
+        });
+        // Set up Custom Resource
+        const customResource = (0, permissions_1.setupPermissions)(this, apiGatewayLoggingRole, sendEmailFunction);
+        // Set up API Gateway
+        const sendEmailApi = (0, apigateway_1.setupApiGateway)(this, sendEmailFunction);
+        // Ensure API Gateway deployment waits for custom resource execution
+        sendEmailApi.node.addDependency(customResource);
+    }
+}
+exports.CdkInfrastructureStack = CdkInfrastructureStack;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2RrLWluZnJhc3RydWN0dXJlLXN0YWNrLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY2RrLWluZnJhc3RydWN0dXJlLXN0YWNrLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLG1DQUFtQztBQUVuQywyQ0FBMkM7QUFDM0MscUNBQXVDO0FBQ3ZDLDZDQUErQztBQUMvQywrQ0FBaUQ7QUFFakQsTUFBYSxzQkFBdUIsU0FBUSxHQUFHLENBQUMsS0FBSztJQUNuRCxZQUFZLEtBQWdCLEVBQUUsRUFBVSxFQUFFLEtBQXNCO1FBQzlELEtBQUssQ0FBQyxLQUFLLEVBQUUsRUFBRSxFQUFFLEtBQUssQ0FBQyxDQUFDO1FBRXhCLGdCQUFnQjtRQUNoQixNQUFNLGlCQUFpQixHQUFHLElBQUEsb0JBQVcsRUFBQyxJQUFJLENBQUMsQ0FBQztRQUU1Qyw0QkFBNEI7UUFDNUIsTUFBTSxxQkFBcUIsR0FBRyxJQUFJLEdBQUcsQ0FBQyxJQUFJLENBQUMsSUFBSSxFQUFFLHVCQUF1QixFQUFFO1lBQ3hFLFNBQVMsRUFBRSxJQUFJLEdBQUcsQ0FBQyxnQkFBZ0IsQ0FBQywwQkFBMEIsQ0FBQztTQUNoRSxDQUFDLENBQUM7UUFFSCx5QkFBeUI7UUFDekIsTUFBTSxjQUFjLEdBQUcsSUFBQSw4QkFBZ0IsRUFBQyxJQUFJLEVBQUUscUJBQXFCLEVBQUUsaUJBQWlCLENBQUMsQ0FBQztRQUV4RixxQkFBcUI7UUFDckIsTUFBTSxZQUFZLEdBQUcsSUFBQSw0QkFBZSxFQUFDLElBQUksRUFBRSxpQkFBaUIsQ0FBQyxDQUFDO1FBRTlELG9FQUFvRTtRQUNwRSxZQUFZLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxjQUFjLENBQUMsQ0FBQztJQUNsRCxDQUFDO0NBQ0Y7QUFyQkQsd0RBcUJDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgY2RrIGZyb20gJ2F3cy1jZGstbGliJztcbmltcG9ydCB7IENvbnN0cnVjdCB9IGZyb20gJ2NvbnN0cnVjdHMnO1xuaW1wb3J0ICogYXMgaWFtIGZyb20gJ2F3cy1jZGstbGliL2F3cy1pYW0nO1xuaW1wb3J0IHsgc2V0dXBMYW1iZGEgfSBmcm9tICcuL2xhbWJkYSc7XG5pbXBvcnQgeyBzZXR1cEFwaUdhdGV3YXkgfSBmcm9tICcuL2FwaWdhdGV3YXknO1xuaW1wb3J0IHsgc2V0dXBQZXJtaXNzaW9ucyB9IGZyb20gJy4vcGVybWlzc2lvbnMnO1xuXG5leHBvcnQgY2xhc3MgQ2RrSW5mcmFzdHJ1Y3R1cmVTdGFjayBleHRlbmRzIGNkay5TdGFjayB7XG4gIGNvbnN0cnVjdG9yKHNjb3BlOiBDb25zdHJ1Y3QsIGlkOiBzdHJpbmcsIHByb3BzPzogY2RrLlN0YWNrUHJvcHMpIHtcbiAgICBzdXBlcihzY29wZSwgaWQsIHByb3BzKTtcblxuICAgIC8vIFNldCB1cCBMYW1iZGFcbiAgICBjb25zdCBzZW5kRW1haWxGdW5jdGlvbiA9IHNldHVwTGFtYmRhKHRoaXMpO1xuXG4gICAgLy8gSUFNIHJvbGUgZm9yIEFQSUcgbG9nZ2luZ1xuICAgIGNvbnN0IGFwaUdhdGV3YXlMb2dnaW5nUm9sZSA9IG5ldyBpYW0uUm9sZSh0aGlzLCAnQXBpR2F0ZXdheUxvZ2dpbmdSb2xlJywge1xuICAgICAgYXNzdW1lZEJ5OiBuZXcgaWFtLlNlcnZpY2VQcmluY2lwYWwoJ2FwaWdhdGV3YXkuYW1hem9uYXdzLmNvbScpLFxuICAgIH0pO1xuXG4gICAgLy8gU2V0IHVwIEN1c3RvbSBSZXNvdXJjZVxuICAgIGNvbnN0IGN1c3RvbVJlc291cmNlID0gc2V0dXBQZXJtaXNzaW9ucyh0aGlzLCBhcGlHYXRld2F5TG9nZ2luZ1JvbGUsIHNlbmRFbWFpbEZ1bmN0aW9uKTtcblxuICAgIC8vIFNldCB1cCBBUEkgR2F0ZXdheVxuICAgIGNvbnN0IHNlbmRFbWFpbEFwaSA9IHNldHVwQXBpR2F0ZXdheSh0aGlzLCBzZW5kRW1haWxGdW5jdGlvbik7XG5cbiAgICAvLyBFbnN1cmUgQVBJIEdhdGV3YXkgZGVwbG95bWVudCB3YWl0cyBmb3IgY3VzdG9tIHJlc291cmNlIGV4ZWN1dGlvblxuICAgIHNlbmRFbWFpbEFwaS5ub2RlLmFkZERlcGVuZGVuY3koY3VzdG9tUmVzb3VyY2UpO1xuICB9XG59XG4iXX0=

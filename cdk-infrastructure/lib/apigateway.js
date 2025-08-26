@@ -1,0 +1,29 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setupApiGateway = void 0;
+const apigateway = require("aws-cdk-lib/aws-apigateway");
+const logs = require("aws-cdk-lib/aws-logs");
+function setupApiGateway(stack, sendEmailFunction) {
+    const sendEmailApi = new apigateway.LambdaRestApi(stack, 'SendEmailAPI', {
+        handler: sendEmailFunction,
+        proxy: true,
+        deployOptions: {
+            loggingLevel: apigateway.MethodLoggingLevel.INFO,
+            dataTraceEnabled: true,
+            accessLogDestination: new apigateway.LogGroupLogDestination(new logs.LogGroup(stack, 'ApiGatewayLogs')),
+            accessLogFormat: apigateway.AccessLogFormat.clf()
+        },
+        defaultCorsPreflightOptions: {
+            allowOrigins: apigateway.Cors.ALL_ORIGINS,
+            allowMethods: ['GET', 'POST', 'OPTIONS'],
+            allowHeaders: ['Content-Type', 'Authorization'],
+            allowCredentials: false,
+        },
+    });
+    // When proxy: true, you DON'T manually add resources or methods
+    // The LambdaRestApi automatically routes ALL requests to your Lambda
+    // Your Lambda function handles the routing logic
+    return sendEmailApi;
+}
+exports.setupApiGateway = setupApiGateway;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBpZ2F0ZXdheS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwaWdhdGV3YXkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQ0EseURBQXlEO0FBQ3pELDZDQUE2QztBQUc3QyxTQUFnQixlQUFlLENBQUMsS0FBZ0IsRUFBRSxpQkFBaUM7SUFDL0UsTUFBTSxZQUFZLEdBQUcsSUFBSSxVQUFVLENBQUMsYUFBYSxDQUFDLEtBQUssRUFBRSxjQUFjLEVBQUU7UUFDckUsT0FBTyxFQUFFLGlCQUFpQjtRQUMxQixLQUFLLEVBQUUsSUFBSTtRQUNYLGFBQWEsRUFBRTtZQUNYLFlBQVksRUFBRSxVQUFVLENBQUMsa0JBQWtCLENBQUMsSUFBSTtZQUNoRCxnQkFBZ0IsRUFBRSxJQUFJO1lBQ3RCLG9CQUFvQixFQUFFLElBQUksVUFBVSxDQUFDLHNCQUFzQixDQUFDLElBQUksSUFBSSxDQUFDLFFBQVEsQ0FBQyxLQUFLLEVBQUUsZ0JBQWdCLENBQUMsQ0FBQztZQUN2RyxlQUFlLEVBQUUsVUFBVSxDQUFDLGVBQWUsQ0FBQyxHQUFHLEVBQUU7U0FDcEQ7UUFDRCwyQkFBMkIsRUFBRTtZQUN6QixZQUFZLEVBQUUsVUFBVSxDQUFDLElBQUksQ0FBQyxXQUFXO1lBQ3pDLFlBQVksRUFBRSxDQUFDLEtBQUssRUFBRSxNQUFNLEVBQUUsU0FBUyxDQUFDO1lBQ3hDLFlBQVksRUFBRSxDQUFDLGNBQWMsRUFBRSxlQUFlLENBQUM7WUFDL0MsZ0JBQWdCLEVBQUUsS0FBSztTQUMxQjtLQUNKLENBQUMsQ0FBQztJQUVILGdFQUFnRTtJQUNoRSxxRUFBcUU7SUFDckUsaURBQWlEO0lBRWpELE9BQU8sWUFBWSxDQUFDO0FBQ3hCLENBQUM7QUF2QkQsMENBdUJDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICogYXMgY2RrIGZyb20gJ2F3cy1jZGstbGliJztcclxuaW1wb3J0ICogYXMgYXBpZ2F0ZXdheSBmcm9tICdhd3MtY2RrLWxpYi9hd3MtYXBpZ2F0ZXdheSc7XHJcbmltcG9ydCAqIGFzIGxvZ3MgZnJvbSAnYXdzLWNkay1saWIvYXdzLWxvZ3MnO1xyXG5pbXBvcnQgeyBGdW5jdGlvbiBhcyBMYW1iZGFGdW5jdGlvbiB9IGZyb20gJ2F3cy1jZGstbGliL2F3cy1sYW1iZGEnO1xyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIHNldHVwQXBpR2F0ZXdheShzdGFjazogY2RrLlN0YWNrLCBzZW5kRW1haWxGdW5jdGlvbjogTGFtYmRhRnVuY3Rpb24pIHtcclxuICAgIGNvbnN0IHNlbmRFbWFpbEFwaSA9IG5ldyBhcGlnYXRld2F5LkxhbWJkYVJlc3RBcGkoc3RhY2ssICdTZW5kRW1haWxBUEknLCB7XHJcbiAgICAgICAgaGFuZGxlcjogc2VuZEVtYWlsRnVuY3Rpb24sXHJcbiAgICAgICAgcHJveHk6IHRydWUsIC8vIFRoaXMgaGFuZGxlcyBBTEwgcm91dGVzIGF1dG9tYXRpY2FsbHlcclxuICAgICAgICBkZXBsb3lPcHRpb25zOiB7XHJcbiAgICAgICAgICAgIGxvZ2dpbmdMZXZlbDogYXBpZ2F0ZXdheS5NZXRob2RMb2dnaW5nTGV2ZWwuSU5GTyxcclxuICAgICAgICAgICAgZGF0YVRyYWNlRW5hYmxlZDogdHJ1ZSxcclxuICAgICAgICAgICAgYWNjZXNzTG9nRGVzdGluYXRpb246IG5ldyBhcGlnYXRld2F5LkxvZ0dyb3VwTG9nRGVzdGluYXRpb24obmV3IGxvZ3MuTG9nR3JvdXAoc3RhY2ssICdBcGlHYXRld2F5TG9ncycpKSxcclxuICAgICAgICAgICAgYWNjZXNzTG9nRm9ybWF0OiBhcGlnYXRld2F5LkFjY2Vzc0xvZ0Zvcm1hdC5jbGYoKVxyXG4gICAgICAgIH0sXHJcbiAgICAgICAgZGVmYXVsdENvcnNQcmVmbGlnaHRPcHRpb25zOiB7XHJcbiAgICAgICAgICAgIGFsbG93T3JpZ2luczogYXBpZ2F0ZXdheS5Db3JzLkFMTF9PUklHSU5TLFxyXG4gICAgICAgICAgICBhbGxvd01ldGhvZHM6IFsnR0VUJywgJ1BPU1QnLCAnT1BUSU9OUyddLFxyXG4gICAgICAgICAgICBhbGxvd0hlYWRlcnM6IFsnQ29udGVudC1UeXBlJywgJ0F1dGhvcml6YXRpb24nXSxcclxuICAgICAgICAgICAgYWxsb3dDcmVkZW50aWFsczogZmFsc2UsXHJcbiAgICAgICAgfSxcclxuICAgIH0pO1xyXG5cclxuICAgIC8vIFdoZW4gcHJveHk6IHRydWUsIHlvdSBET04nVCBtYW51YWxseSBhZGQgcmVzb3VyY2VzIG9yIG1ldGhvZHNcclxuICAgIC8vIFRoZSBMYW1iZGFSZXN0QXBpIGF1dG9tYXRpY2FsbHkgcm91dGVzIEFMTCByZXF1ZXN0cyB0byB5b3VyIExhbWJkYVxyXG4gICAgLy8gWW91ciBMYW1iZGEgZnVuY3Rpb24gaGFuZGxlcyB0aGUgcm91dGluZyBsb2dpY1xyXG5cclxuICAgIHJldHVybiBzZW5kRW1haWxBcGk7XHJcbn0iXX0=

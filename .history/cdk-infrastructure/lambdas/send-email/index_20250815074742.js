@@ -2,8 +2,6 @@ const AWS = require('aws-sdk');
 const SES = new AWS.SES();
 
 exports.handler = async (event) => {
-  console.log('Event:', JSON.stringify(event, null, 2));
-
   // Handle preflight OPTIONS requests
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -30,48 +28,8 @@ exports.handler = async (event) => {
     };
   }
 
-  // Check if this is the correct path (when using proxy: true, all paths go to Lambda)
-  if (!event.path || (!event.path.includes('send-email') && event.path !== '/')) {
-    return {
-      statusCode: 404,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "OPTIONS,POST"
-      },
-      body: JSON.stringify({ message: 'Not Found' })
-    };
-  }
-
   try {
-    // Parse the request body
-    let body;
-    try {
-      body = JSON.parse(event.body);
-    } catch (parseError) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "OPTIONS,POST"
-        },
-        body: JSON.stringify({ message: 'Invalid JSON in request body' })
-      };
-    }
-
-    // Validate required fields
-    if (!body.name || !body.email || !body.message) {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "OPTIONS,POST"
-        },
-        body: JSON.stringify({ message: 'Missing required fields: name, email, message' })
-      };
-    }
+    const body = JSON.parse(event.body);
     
     // Define the verified email address
     const verifiedEmail = 'dorianalden89@gmail.com';
@@ -93,9 +51,7 @@ exports.handler = async (event) => {
       },
     };
 
-    console.log('Sending email with params:', JSON.stringify(params, null, 2));
     await SES.sendEmail(params).promise();
-    console.log('Email sent successfully');
     
     return {
       statusCode: 200,
